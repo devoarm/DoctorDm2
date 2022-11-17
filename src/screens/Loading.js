@@ -27,7 +27,7 @@ function Loading({navigation}) {
             phone: userDoc.data().phone,
             cid: userDoc.data().cid,
             email: user.email,
-            uid: user.uid,
+            uid: user.uid,            
             photoURL: user.photoURL,
           }),
         );

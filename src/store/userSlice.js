@@ -6,6 +6,7 @@ const initialState = {
   cid: '',
   email: '',
   uid: '',
+  phone:'',
   photoURL: '',
 };
 
@@ -19,6 +20,7 @@ export const userSlice = createSlice({
       state.cid = action.payload.cid;
       state.uid = action.payload.uid;
       state.photoURL = action.payload.photoURL;
+      state.phone = action.payload.phone;
     },
     logout: state => {
       state.f_name = '';
@@ -26,6 +28,7 @@ export const userSlice = createSlice({
       state.cid = '';
       state.uid = '';
       state.photoURL = '';
+      state.phone = '';
     },
   },
 });

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "833899447588",
+    "project_id": "ruraldoctor-77afd",
+    "storage_bucket": "ruraldoctor-77afd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:833899447588:android:de37423b20c3ac6bbf9fb1",
+        "android_client_info": {
+          "package_name": "com.doctordm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "833899447588-qlsgnlu66hpis2cvggptsh5i4qkovql3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.doctordm",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "833899447588-jdrsimoomurqvvirl5bqubsu8prrb24s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ1Yvw-ZOOGVBNmsQiEcQmCnVfbdR3_6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833899447588-jdrsimoomurqvvirl5bqubsu8prrb24s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

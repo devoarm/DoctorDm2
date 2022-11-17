@@ -128,15 +128,20 @@ const HomeScreen = () => {
             </TouchableWithoutFeedback>
           </View>
           <View style={styles.rowCard}>
-            <View style={styles.box}>
-              <Image
-                source={require('../../assets/card/doctor.png')}
-                style={{width: 70, height: 70}}
-              />
-              <Text style={{marginTop: 5, textAlign: 'center'}}>
-                คำแนะนำ{'\n'}ด้านการดูแลรักษา
-              </Text>
-            </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                navigation.navigate('doctorAdvice');
+              }}>
+              <View style={styles.box}>
+                <Image
+                  source={require('../../assets/card/doctor.png')}
+                  style={{width: 70, height: 70}}
+                />
+                <Text style={{marginTop: 5, textAlign: 'center'}}>
+                  คำแนะนำ{'\n'}ด้านการดูแลรักษา
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
             <View style={styles.box}>
               <Image
                 source={require('../../assets/card/stethoscope.png')}

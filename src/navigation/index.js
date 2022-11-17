@@ -11,6 +11,7 @@ import PatientRegisterScreen from '../screens/PatientRegister';
 import ResultPatientRegisterScreen from '../screens/ResultPatientRegister';
 import ScheduleScreen from '../screens/Schedule';
 import AdviceScheduleScreen from '../screens/AdviceSchedule';
+import DoctorAdvice from '../screens/DoctorAdvice';
 
 const InitNavigation = () => {
   return (
@@ -28,6 +29,7 @@ const InitNavigation = () => {
       <Stack.Screen name="resultPatientRegister" component={ResultPatientRegisterScreen} />
       <Stack.Screen name="schedule" component={ScheduleScreen} />
       <Stack.Screen name="adviceSchedule" component={AdviceScheduleScreen} />
+      <Stack.Screen name="doctorAdvice" component={DoctorAdvice} />
     </Stack.Navigator>
   );
 };

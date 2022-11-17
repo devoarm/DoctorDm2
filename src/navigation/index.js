@@ -7,6 +7,7 @@ import Login from '../auth/Login';
 import Register from '../auth/Register';
 import RegisterGoogle from '../auth/RegisterGoogle';
 import Loading from '../screens/Loading';
+import PatientRegisterScreen from '../screens/PatientRegister';
 
 const InitNavigation = () => {
   return (
@@ -20,6 +21,7 @@ const InitNavigation = () => {
       <Stack.Screen name="register" component={Register} />
       <Stack.Screen name="home" component={Home} />
       <Stack.Screen name="registerGoogle" component={RegisterGoogle} />
+      <Stack.Screen name="patientRegister" component={PatientRegisterScreen} />
     </Stack.Navigator>
   );
 };

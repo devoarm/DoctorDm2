@@ -18,7 +18,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Avatar, Divider} from 'react-native-paper';
 import Colors from '../themes/Colors';
 import auth from '@react-native-firebase/auth';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeScreen = () => {
   const user = useSelector(state => state.user);
@@ -43,7 +43,7 @@ const HomeScreen = () => {
   };
   return (
     <Background>
-      <SafeAreaView>
+      <SafeAreaView style={{flex: 1}}>
         <View style={styles.headers}>
           <Icon
             size={25}
@@ -74,7 +74,14 @@ const HomeScreen = () => {
               </Text>
             </View>
             <View style={{marginHorizontal: 10}}>
-              <Avatar.Image size={80} source={{uri: user.photoURL}} />
+              {user.photoURL ? (
+                <Avatar.Image size={80} source={{uri: user.photoURL}} />
+              ) : (
+                <Avatar.Image
+                  size={80}
+                  source={require('../../assets/person.png')}
+                />
+              )}
             </View>
           </View>
           <Divider
@@ -91,15 +98,21 @@ const HomeScreen = () => {
             เมนูให้บริการ
           </Text>
           <View style={styles.rowCard}>
-            <View style={styles.box}>
-              <Image
-                source={require('../../assets/card/checklist.png')}
-                style={{width: 70, height: 70}}
-              />
-              <Text style={{marginTop: 5, textAlign: 'center'}}>
-                ลงทะเบียนตรวจ{'\n'}สุขภาพประจำปี
-              </Text>
-            </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                console.log('click')
+                navigation.navigate('patientRegister');
+              }}>
+              <View style={styles.box}>
+                <Image
+                  source={require('../../assets/card/checklist.png')}
+                  style={{width: 70, height: 70}}
+                />
+                <Text style={{marginTop: 5, textAlign: 'center'}}>
+                  ลงทะเบียนตรวจ{'\n'}สุขภาพประจำปี
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
             <View style={styles.box}>
               <Image
                 source={require('../../assets/card/schedule.png')}

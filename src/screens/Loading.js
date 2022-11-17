@@ -14,21 +14,25 @@ function Loading({navigation}) {
   const dispatch = useDispatch();
   // Handle user state changes
   async function onAuthStateChanged(user) {
+    // return await auth().signOut();
     if (user) {
       const userDoc = await firestore().collection('users').doc(user.uid).get();
-      if (userDoc) {
+      if (userDoc.data()) {
         // console.log(user);
-        // console.log(userDoc.data());
+        console.log(userDoc.data());
         dispatch(
           setUserSlice({
             f_name: userDoc.data().f_name,
             l_name: userDoc.data().l_name,
+            phone: userDoc.data().phone,
             cid: userDoc.data().cid,
             email: user.email,
             uid: user.uid,
             photoURL: user.photoURL,
           }),
         );
+      } else {
+        navigation.replace('registerGoogle');
       }
       setUser(user);
     }
@@ -43,13 +47,9 @@ function Loading({navigation}) {
   if (initializing) return null;
 
   if (!user) {
-    return (
-      <Login />
-    );
+    return <Login />;
   }
 
-  return (
-    <HomeScreen />
-  );
+  return <HomeScreen />;
 }
 export default Loading;

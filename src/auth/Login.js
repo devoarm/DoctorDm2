@@ -22,6 +22,7 @@ import {useNavigation} from '@react-navigation/native';
 import {ProgressDialog} from 'react-native-simple-dialogs';
 import {useSelector, useDispatch} from 'react-redux';
 import {setUserSlice} from '../store/userSlice';
+
 GoogleSignin.configure({
   webClientId:
     '833899447588-jdrsimoomurqvvirl5bqubsu8prrb24s.apps.googleusercontent.com',
@@ -58,25 +59,7 @@ const Login = () => {
               if (querySnapshotPw.size > 0) {
                 querySnapshotPw.docs.forEach(doc => {
                   console.log(doc.data());
-                  auth()
-                    .createUserWithEmailAndPassword(
-                      doc.data().email,
-                      doc.data().password,
-                    )
-                    .then(() => {
-                      console.log('User account created & signed in!');
-                    })
-                    .catch(error => {
-                      if (error.code === 'auth/email-already-in-use') {
-                        console.log('That email address is already in use!');
-                      }
-
-                      if (error.code === 'auth/invalid-email') {
-                        console.log('That email address is invalid!');
-                      }
-
-                      console.error(error);
-                    });
+                  
                 });
               } else {
                 setError('password', {
@@ -92,6 +75,7 @@ const Login = () => {
     setLoading(false);
   };
   const handleGoogleSingin = async () => {
+    setLoading(true)
     try {
       await GoogleSignin.hasPlayServices();
       const {idToken} = await GoogleSignin.signIn();
@@ -111,6 +95,7 @@ const Login = () => {
     } catch (error) {
       console.log(error.message);
     }
+    setLoading(false)
   };
   return (
     <Background>
@@ -120,10 +105,7 @@ const Login = () => {
         message="กรุณารอสักครู่..."
       />
       <ScrollView
-        contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
-        <KeyboardAvoidingView
-          contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>        
           <View
             style={{
               marginHorizontal: 30,
@@ -204,8 +186,7 @@ const Login = () => {
               color={GoogleSigninButton.Color.Dark}
               onPress={handleGoogleSingin}
             />
-          </View>
-        </KeyboardAvoidingView>
+          </View>          
       </ScrollView>
     </Background>
   );

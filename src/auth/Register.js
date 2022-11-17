@@ -36,28 +36,53 @@ const RegisterScreen = ({navigation}) => {
     setLoading(true);
     if (data.password == data.password_c) {
       try {
-        const docRef = await firestore().collection('users').add({
-          f_name: data.f_name,
-          l_name: data.l_name,
-          email: data.email,
-          password: data.password,
-          cid: data.cid,
-          birthday: date.toLocaleDateString(),
-        });
-        reset();
-        setLoading(false);
-        navigation.navigate('login');
+        try {
+          const user = await auth().createUserWithEmailAndPassword(
+            data.email,
+            data.password,
+          );
+          console.log(user.user);
+          const docRef = await firestore()
+            .collection('users')
+            .doc(user.user.uid)
+            .set({
+              f_name: data.f_name,
+              l_name: data.l_name,
+              email: data.email,
+              password: data.password,
+              cid: data.cid,
+              birthday: date.toLocaleDateString(),
+              phone: data.phone,
+            });
+          reset({
+            f_name: '',
+            l_name: '',
+            email: '',
+            password: '',
+            cid: '',
+            phone:''
+          });
+          navigation.navigate('loading');
+        } catch (error) {
+          if (error.code === 'auth/email-already-in-use') {
+            console.log('That email address is already in use!');
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            console.log('That email address is invalid!');
+          }
+          Alert.alert('ไม่สำเร็จ', `${error.code}`);
+          console.error(error);
+        }
       } catch (e) {
         setLoading(false);
-        Alert.alert(
-          "ไม่สำเร็จ",
-          `${e.message}`,         
-        );
+        Alert.alert('ไม่สำเร็จ', `${e.message}`);
         console.error('Error adding document: ', e);
       }
     } else {
       setError('password_c', {type: 'custom', message: 'รหัสผ่านไม่ตรงกัน'});
     }
+    setLoading(false);
   };
   return (
     <Background>
@@ -70,7 +95,7 @@ const RegisterScreen = ({navigation}) => {
         contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
         <KeyboardAvoidingView
           contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          behavior={'padding'}>
           <View style={{justifyContent: 'center', marginHorizontal: 30}}>
             <Text style={styles.text}>ลงทะเบียน | Register</Text>
             <Controller
@@ -108,6 +133,25 @@ const RegisterScreen = ({navigation}) => {
             />
             {errors.f_name && (
               <HelperText type="error">กรุณากรอกนามสกุล !</HelperText>
+            )}
+            <Controller
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <TextInput
+                  style={{marginVertical: 5}}
+                  label="เบอร์โทรศัพท์"
+                  value={value}
+                  keyboardType="numeric"
+                  onBlur={onBlur}
+                  onChangeText={value => onChange(value)}
+                  error={errors.phone && true}
+                />
+              )}
+              name="phone"
+              rules={{required: true}}
+            />
+            {errors.phone && (
+              <HelperText type="error">กรุณากรอกเบอร์โทรศัพท์ !</HelperText>
             )}
             <Pressable onPress={() => setOpenPicker(true)}>
               <TextInput

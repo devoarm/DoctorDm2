@@ -100,7 +100,6 @@ const HomeScreen = () => {
           <View style={styles.rowCard}>
             <TouchableWithoutFeedback
               onPress={() => {
-                console.log('click')
                 navigation.navigate('patientRegister');
               }}>
               <View style={styles.box}>
@@ -113,15 +112,20 @@ const HomeScreen = () => {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-            <View style={styles.box}>
-              <Image
-                source={require('../../assets/card/schedule.png')}
-                style={{width: 70, height: 70}}
-              />
-              <Text style={{marginTop: 5, textAlign: 'center'}}>
-                กำหนดการ{'\n'}ตรวจสุขภาพ
-              </Text>
-            </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                navigation.navigate('schedule');
+              }}>
+              <View style={styles.box}>
+                <Image
+                  source={require('../../assets/card/schedule.png')}
+                  style={{width: 70, height: 70}}
+                />
+                <Text style={{marginTop: 5, textAlign: 'center'}}>
+                  กำหนดการ{'\n'}ตรวจสุขภาพ
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
           <View style={styles.rowCard}>
             <View style={styles.box}>

@@ -1,7 +1,7 @@
 import React from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 
-const App = ({ children }) => (
+const BackGround1 = ({ children }) => (
   <View style={styles.container}>
     <ImageBackground
       source={require("../../assets/theme/background.png")}
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default BackGround1;

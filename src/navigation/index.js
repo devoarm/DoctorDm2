@@ -9,6 +9,8 @@ import RegisterGoogle from '../auth/RegisterGoogle';
 import Loading from '../screens/Loading';
 import PatientRegisterScreen from '../screens/PatientRegister';
 import ResultPatientRegisterScreen from '../screens/ResultPatientRegister';
+import ScheduleScreen from '../screens/Schedule';
+import AdviceScheduleScreen from '../screens/AdviceSchedule';
 
 const InitNavigation = () => {
   return (
@@ -24,6 +26,8 @@ const InitNavigation = () => {
       <Stack.Screen name="registerGoogle" component={RegisterGoogle} />
       <Stack.Screen name="patientRegister" component={PatientRegisterScreen} />
       <Stack.Screen name="resultPatientRegister" component={ResultPatientRegisterScreen} />
+      <Stack.Screen name="schedule" component={ScheduleScreen} />
+      <Stack.Screen name="adviceSchedule" component={AdviceScheduleScreen} />
     </Stack.Navigator>
   );
 };

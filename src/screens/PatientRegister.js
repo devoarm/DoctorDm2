@@ -1,17 +1,28 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
-import SessionBg from '../themes/BackGroundSession';
+import PatientRegisterBg from '../themes/BackgroundPatientRegister';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BtGoBack from '../components/BtGoBack';
 import Colors from '../themes/Colors';
-import {useSelector} from 'react-redux';
 import {TextInput, Button, Avatar} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
-const PatientRegisterScreen = () => {
+import firestore from '@react-native-firebase/firestore';
+import {useSelector, useDispatch} from 'react-redux';
+import moment from 'moment';
+const PatientRegisterScreen = () => {  
   const user = useSelector(state => state.user);
   const navigation = useNavigation();
+  const onSubmit = async () => {
+    const res = await firestore()
+      .collection(`users`)
+      .doc(user.uid)
+      .collection('healt_check')
+      .doc(moment().format('YYYY'))
+      .set({register: true});
+    navigation.navigate('resultPatientRegister');
+  };
   return (
-    <SessionBg>
+    <PatientRegisterBg>
       <BtGoBack />
       <View style={styles.container}>
         <View style={styles.card}>
@@ -64,19 +75,19 @@ const PatientRegisterScreen = () => {
         </View>
         <View style={styles.cardFooter}>
           <Text style={{color: Colors.black}}>
-            ท่านต้องการลงทะเบียนตรวจสุขภาพประจำปี 2565
+            ท่านต้องการลงทะเบียนตรวจสุขภาพประจำปี
             เพื่อตรวจโรคเบาหวานและความดันโลหิตสูง ใช่หรือไม่ กรุณากด ยืนยัน
             เพื่อทำการลงทะเบียน
           </Text>
         </View>
         <Button
           mode="contained"
-          style={{backgroundColor: 'green'}}
-          onPress={() => navigation.navigate('resultPatientRegister')}>
+          style={{backgroundColor: 'seagreen'}}
+          onPress={() => onSubmit()}>
           ยืนยัน
         </Button>
       </View>
-    </SessionBg>
+    </PatientRegisterBg>
   );
 };
 
@@ -95,13 +106,14 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 15,
     borderRadius: 20,
+    opacity: 0.7
   },
   card: {
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.greenShade,
-    borderRadius: 15,
+    backgroundColor: Colors.gray,
+    borderRadius: 20,
   },
   rowDetail: {
     margin: 5,

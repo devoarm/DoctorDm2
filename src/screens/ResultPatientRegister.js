@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
-import SessionBg from '../themes/BackGroundSession';
+import PatientRegisterBg from '../themes/BackgroundPatientRegister';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BtGoBack from '../components/BtGoBack';
 import Colors from '../themes/Colors';
@@ -11,7 +11,7 @@ const ResultPatientRegisterScreen = () => {
   const user = useSelector(state => state.user);
     const navigation = useNavigation()
   return (
-    <SessionBg>
+    <PatientRegisterBg>
       <BtGoBack />
       <View style={styles.container}>
         <View style={styles.card}>
@@ -30,19 +30,19 @@ const ResultPatientRegisterScreen = () => {
           />
           <Text style={{textAlign: 'center'}}>
             กรุณาติดตามกำหนดการในการตรวจสุขภาพประจำปี
-            ได้ผ่านการแจ้งเตือนของแอปพลิเคชั่น
+            ได้ผ่านการแจ้งเตือนของแอปพลิเคชัน
             หรือฟังประกาศผ่านหอกระจายข่าวของชุมชน
           </Text>
         </View>
 
         <Button
           mode="contained"
-          style={{backgroundColor: 'green'}}
+          style={{backgroundColor: 'seagreen'}}
           onPress={() => navigation.replace('home')}>
           กลับสู่หน้าหลัก
         </Button>
       </View>
-    </SessionBg>
+    </PatientRegisterBg>
   );
 };
 
@@ -60,9 +60,9 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.greenShade,
+    backgroundColor: Colors.gray,
     borderRadius: 15,
-    marginBottom:20
+    marginBottom:20,
   },
   
 });

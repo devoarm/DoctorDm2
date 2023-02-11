@@ -53,6 +53,7 @@ const RegisterScreen = ({navigation}) => {
               cid: data.cid,
               birthday: date.toLocaleDateString(),
               phone: data.phone,
+              isAdmin: false
             });
           reset({
             f_name: '',
@@ -91,18 +92,20 @@ const RegisterScreen = ({navigation}) => {
         title="กำลังโหลด"
         message="กรุณา, รอสักครู่..."
       />
+      <View style={styles.frame}>
       <ScrollView
         contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}>
         <KeyboardAvoidingView
           contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
           behavior={'padding'}>
-          <View style={{justifyContent: 'center', marginHorizontal: 30}}>
+          <View style={{justifyContent: 'center', marginHorizontal: 10}}>
             <Text style={styles.text}>ลงทะเบียน | Register</Text>
+            <View style ={styles.BoxInput}>
             <Controller
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
-                  style={{marginVertical: 5}}
+                  style={styles.textinput}
                   label="ชื่อ"
                   value={value}
                   onBlur={onBlur}
@@ -116,11 +119,13 @@ const RegisterScreen = ({navigation}) => {
             {errors.f_name && (
               <HelperText type="error">กรุณากรอกชื่อ !</HelperText>
             )}
+            </View>
+            <View style ={styles.BoxInput}>
             <Controller
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
-                  style={{marginVertical: 5}}
+                  style={styles.textinput}
                   label="นามสกุล"
                   value={value}
                   onBlur={onBlur}
@@ -134,11 +139,13 @@ const RegisterScreen = ({navigation}) => {
             {errors.f_name && (
               <HelperText type="error">กรุณากรอกนามสกุล !</HelperText>
             )}
+            </View>
+            <View style ={styles.BoxInput}>
             <Controller
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
-                  style={{marginVertical: 5}}
+                  style={styles.textinput}
                   label="เบอร์โทรศัพท์"
                   value={value}
                   keyboardType="numeric"
@@ -153,10 +160,13 @@ const RegisterScreen = ({navigation}) => {
             {errors.phone && (
               <HelperText type="error">กรุณากรอกเบอร์โทรศัพท์ !</HelperText>
             )}
+            </View>
+            <View style ={styles.BoxInput}>
             <Pressable onPress={() => setOpenPicker(true)}>
               <TextInput
+                style={styles.textinput}
                 label="
-                  กรุณาเลือกวันเกิด
+                  วันเกิด
                 "
                 value={date.toLocaleDateString()}
                 left={<TextInput.Icon icon="calendar-alt" />}
@@ -178,16 +188,19 @@ const RegisterScreen = ({navigation}) => {
                 setOpenPicker(false);
               }}
             />
+            </View>
+            <View style ={styles.BoxInput}>
             <Controller
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
-                  style={{marginVertical: 5}}
-                  label="รหัสบัตรประชาชน(username)"
+                  style={styles.textinput}
+                  label="เลขประจำตัวประชาชน(username)"
                   value={value}
                   onBlur={onBlur}
                   onChangeText={value => onChange(value)}
                   error={errors.cid && true}
+                  keyboardType="numeric"
                 />
               )}
               name="cid"
@@ -195,14 +208,16 @@ const RegisterScreen = ({navigation}) => {
             />
             {errors.cid && (
               <HelperText type="error">
-                กรุณากรอกรหัสบัตรประชาชน(username) !
+                กรุณากรอกเลขประจำตัวประชาชน(username) !
               </HelperText>
             )}
+            </View>
+            <View style ={styles.BoxInput}>
             <Controller
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
-                  style={{marginVertical: 5}}
+                  style={styles.textinput}
                   label="อีเมล(Email)"
                   value={value}
                   onBlur={onBlur}
@@ -216,11 +231,13 @@ const RegisterScreen = ({navigation}) => {
             {errors.email && (
               <HelperText type="error">กรุณากรอกอีเมล(Email) !</HelperText>
             )}
+            </View>
+            <View style ={styles.BoxInput}>
             <Controller
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
-                  style={{marginVertical: 5}}
+                  style={styles.textinput}
                   label="รหัสผ่าน(password)"
                   value={value}
                   onBlur={onBlur}
@@ -245,12 +262,14 @@ const RegisterScreen = ({navigation}) => {
                 กรุณากรอกรหัสผ่าน(password) !
               </HelperText>
             )}
+            </View>
+            <View style ={styles.BoxInput}>
             <Controller
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
                 <TextInput
-                  style={{marginVertical: 5}}
-                  label="รหัสผ่าน(password)"
+                  style={styles.textinput}
+                  label="รหัสผ่านอีกครั้ง(re-password)"
                   value={value}
                   onBlur={onBlur}
                   secureTextEntry={secureText}
@@ -272,22 +291,25 @@ const RegisterScreen = ({navigation}) => {
             {errors.password_c && (
               <HelperText type="error">{errors.password_c.message}</HelperText>
             )}
+            </View>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 30,
+                marginVertical: 10,
               }}>
               <Button
-                style={{marginHorizontal: 10, backgroundColor: 'grey'}}
+                style={{marginHorizontal: 10, 
+                        backgroundColor: 'seagreen',
+                        width: 210,}}
                 mode="contained"
                 onPress={handleSubmit(onSubmit)}>
                 ลงทะเบียน
               </Button>
               <Text>|</Text>
               <Button
-                style={{marginHorizontal: 10, backgroundColor: 'goldenrod'}}
+                style={{marginHorizontal: 10, backgroundColor: 'black'}}
                 mode="contained"
                 onPress={() => navigation.goBack()}>
                 ยกเลิก
@@ -296,6 +318,7 @@ const RegisterScreen = ({navigation}) => {
           </View>
         </KeyboardAvoidingView>
       </ScrollView>
+      </View>
     </Background>
   );
 };
@@ -305,9 +328,35 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 25,
     lineHeight: 84,
-    fontWeight: 'bold',
+    marginTop: 10,
     textAlign: 'center',
   },
+  BoxInput: {
+    height: 55,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    borderColor: 'black',
+    borderWidth: 1
+  },
+  textinput: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    marginHorizontal: 10,
+  },
+  frame:{
+    height: 620,
+    marginHorizontal: 5,
+    marginTop: 95,
+    justifyContent: 'flex-start',
+    backgroundColor: Colors.whiteSmoke,
+    padding: 10,
+    borderTopStartRadius: 30,
+    borderTopEndRadius: 30,
+    shadowColor: 'black',
+  }
 });
 
 export default RegisterScreen;

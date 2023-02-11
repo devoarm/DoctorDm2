@@ -1,6 +1,6 @@
 import {StyleSheet, View, Image, Button} from 'react-native';
 import React from 'react';
-import BackGround1 from '../themes/Background';
+import ScheduleBg from '../themes/BackgroundSchedule';
 import SessionBg from '../themes/BackGroundSession';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import BtGoBack from '../components/BtGoBack';
@@ -12,11 +12,11 @@ const ScheduleScreen = () => {
   const user = useSelector(state => state.user);
   const navigation = useNavigation();
   return (
-    <BackGround1>
+    <ScheduleBg>
       <BtGoBack />
       <View style={styles.container}>
         <Text style={{fontWeight: 'bold', fontSize: 17}}>
-          ข้อควรปฏิบัติและคำแนะนำ ก่อนการตรวจสุขภาพ
+          กำหนดการ
         </Text>
         <Text style={{fontSize: 17}}>ตรวจสุขภาพประจำปี 2565</Text>
         <View style={styles.card}>
@@ -59,14 +59,14 @@ const ScheduleScreen = () => {
             <View style={{flex: 1}}>
               <Button
                 title="ข้อควรปฏิบัติและคำแนะนำก่อนการตรวจสุขภาพ "
-                color="green"
+                color="seagreen"
                 onPress={() => navigation.navigate('adviceSchedule')}
               />
             </View>
           </View>
         </View>
       </View>
-    </BackGround1>
+    </ScheduleBg>
   );
 };
 
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    backgroundColor: Colors.greenShade,
+    backgroundColor: Colors.gray,
     borderRadius: 15,
     marginTop: 10,
     marginBottom: 20,

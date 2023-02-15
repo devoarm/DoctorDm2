@@ -7,6 +7,8 @@ import {store} from './src/app/store';
 import {Provider} from 'react-redux';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import InitNavigation from './src/navigation';
+
+
 const App = () => {
   return (
     <Provider store={store}>

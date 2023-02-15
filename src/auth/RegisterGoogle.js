@@ -48,8 +48,8 @@ const RegisterGoogle = ({navigation}) => {
         cid: data.cid,
         birthday: date.toLocaleDateString(),
         phone: data.phone,
-        email: user.email,
-        isAdmin: false
+        email: user.email,        
+        role:'user'
       });
       navigation.navigate('loading');
     } catch (e) {

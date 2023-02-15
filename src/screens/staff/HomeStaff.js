@@ -17,7 +17,7 @@ import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 export default function HomeStaffScreen() {
-  const user = useSelector(state => state.user);
+  const user = useSelector(state => state.user);  
   const navigation = useNavigation();
   const handleLogout = () => {
     Alert.alert('ยืนยัน', 'คุณต้องการออกจากระบบ ใช่หรือไม่?', [
@@ -53,7 +53,7 @@ export default function HomeStaffScreen() {
             <View style={{marginHorizontal: 5}}>
               <Text
                 style={{textAlign: 'left', fontSize: 14, color: Colors.black}}>
-                สวัดดีค่ะ
+                สวัดดีค่ะ ({user.role})
               </Text>
               <Text
                 style={{textAlign: 'left', fontSize: 18, color: Colors.black}}>

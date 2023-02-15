@@ -23,6 +23,9 @@ import ReportUserScreen from '../screens/staff/users/ReportUser';
 import MyProfile from '../screens/MyProfile';
 import EditUser from '../screens/staff/users/EditUser';
 import DetailRegister from '../screens/staff/DetailRegister';
+import ResultHealtAfterCheck from '../screens/ResultHealtAfterCheck';
+import MakerMap from '../screens/staff/MakerMap';
+import MapHealPosition from '../screens/MapHealPosition';
 const InitNavigation = () => {
   return (
     <Stack.Navigator
@@ -43,6 +46,7 @@ const InitNavigation = () => {
       <Stack.Screen name="healthCheck" component={HealthCheckScreen} />
       <Stack.Screen name="resultHealthCheck" component={ResultHealtCheckScreen} />
       <Stack.Screen name="resultHealthCare" component={ResultHealtCareScreen} />
+      <Stack.Screen name="resultHealtAfterCheck" component={ResultHealtAfterCheck} />
       <Stack.Screen name="appoint" component={AppointScreen} />
       <Stack.Screen name="users" component={UserManagePage} />
       <Stack.Screen name="detailUser" component={DetailUserPage} />
@@ -51,6 +55,8 @@ const InitNavigation = () => {
       <Stack.Screen name="myProfile" component={MyProfile} />
       <Stack.Screen name="editUser" component={EditUser} />
       <Stack.Screen name="detailRegister" component={DetailRegister} />
+      <Stack.Screen name="makerMap" component={MakerMap} />
+      <Stack.Screen name="mapHealPosition" component={MapHealPosition} />
     </Stack.Navigator>
   );
 };

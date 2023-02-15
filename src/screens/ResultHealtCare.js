@@ -63,9 +63,12 @@ const ResultHealtCareScreen = () => {
         <BtGoBack />
         <View style={styles.container}>
           <ChartBarChart
-            bloodSugar={bloodSugar}
-            upperPressure={upperPressure}
-            lowerPressure={lowerPressure}
+            // bloodSugar={bloodSugar}
+            // upperPressure={upperPressure}
+            // lowerPressure={lowerPressure}
+            bloodSugar={12}
+            upperPressure={13}
+            lowerPressure={50}
           />
           <CardBorder>
             <View

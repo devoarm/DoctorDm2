@@ -40,6 +40,8 @@ const HealthCheckScreen = () => {
         .doc(user.uid)
         .collection('healt_check')
         .doc(moment().format('YYYY'))
+        .collection('healt_check_date')
+        .doc(moment().format('YYYY-MM-DD'))
         .set({
           lowerPressure: data.lowerPressure,
           upperPressure: data.upperPressure,
@@ -47,12 +49,14 @@ const HealthCheckScreen = () => {
           width: data.width,
           bloodSugar: data.bloodSugar,
         });
-        navigation.navigate('resultHealthCheck')
+      navigation.navigate('resultHealtAfterCheck', {
+        healtCheck: data,
+      });
     } catch (error) {
+      console.log(error.message);
       Alert.alert('ไม่สำเร็จ', `${error.message}`);
     }
-    console.log(moment().format('YYYY'));
-    console.log(data);
+
     setLoading(false);
   };
   return (
@@ -72,7 +76,7 @@ const HealthCheckScreen = () => {
               style={{margin: 10}}
             />
             <Text>
-              คำแนะนำ {'\n'} 
+              คำแนะนำ {'\n'}
               การตรวจระดับน้ำตาลในเลือด ควรกระทำ{'\n'}
               โดยผู้เชี่ยวชาญ เพื่อค่าที่ถูกต้องและแม่นยำ
             </Text>

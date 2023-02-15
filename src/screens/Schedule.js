@@ -1,5 +1,5 @@
 import {StyleSheet, View, Image, Button} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ScheduleBg from '../themes/BackgroundSchedule';
 import SessionBg from '../themes/BackGroundSession';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -8,38 +8,57 @@ import Colors from '../themes/Colors';
 import {useSelector} from 'react-redux';
 import {TextInput, Avatar, Text, ToggleButton} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+import moment from 'moment';
 const ScheduleScreen = () => {
   const user = useSelector(state => state.user);
+  const [appoint, setAppoint] = useState({});
   const navigation = useNavigation();
+  const fetchAppoint = async () => {
+    try {
+      const detailAppoint = await firestore()
+        .collection('appoint')
+        .doc(moment().format('YYYY'))
+        .get();
+      console.log(detailAppoint.data());
+      setAppoint({
+        date: detailAppoint.data().date,
+        latitude: detailAppoint.data().latitude,
+        longitude: detailAppoint.data().longitude,
+        namePosition: detailAppoint.data().namePosition,
+        time: detailAppoint.data().time,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    fetchAppoint();
+  }, []);
+
   return (
     <ScheduleBg>
       <BtGoBack />
       <View style={styles.container}>
-        <Text style={{fontWeight: 'bold', fontSize: 17}}>
-          กำหนดการ
-        </Text>
+        <Text style={{fontWeight: 'bold', fontSize: 17}}>กำหนดการ</Text>
         <Text style={{fontSize: 17}}>ตรวจสุขภาพประจำปี 2565</Text>
         <View style={styles.card}>
           <Text>
-            โรงพยาบาลส่งเสริมสุขภาพตำบล ตำบลปราสาท จะทำการตรวจสุขภาพประจำปี
-            โรคเบาหวานและความดันโลหิตสูง ให้แก่ ประชาชนในพื้นที่ ชุมชนตลาดนิคม
-            ต.ปราสาท อ.บ้านกรวด จ.บุรีรัมย์
+            โรงพยาบาลส่งเสริมสุขภาพตำบล จะทำการตรวจสุขภาพประจำปี
+            โรคเบาหวานและความดันโลหิตสูง
           </Text>
           <View style={{marginVertical: 15}}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{fontWeight: 'bold'}}>วันที่</Text>
-              <Text> 1 ธันวาคม พ.ศ.2565</Text>
+              <Text>{` : ${moment(appoint.date).format('DD-MM-YYYY')}`}</Text>
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{fontWeight: 'bold'}}>เวลา</Text>
-              <Text> 09.30 น. - 16.30 น.</Text>
+              <Text> {` : ${appoint.time}`}</Text>
             </View>
             <View style={{flexDirection: 'row'}}>
               <Text style={{fontWeight: 'bold'}}>สถานที่</Text>
-              <Text>
-                {' '}
-                สถานที่ โดมอเนกประสงค์เทศบาลตำบล{'\n'} ตลาดนิคมปราสาท
-              </Text>
+              <Text>{` : ${appoint.namePosition}`}</Text>
             </View>
           </View>
           <Text>
@@ -47,7 +66,18 @@ const ScheduleScreen = () => {
             ข้อควรปฏิบัติและคำแนะนำก่อนเข้ารับการตรวจ อย่างเคร่งครัด
           </Text>
           <View style={{marginTop: 20}}>
-            <Text style={{fontStyle: 'italic'}}>กดที่นี่ เพื่อดู</Text>
+            <Text
+              style={{fontStyle: 'italic', marginBottom: 10}}
+              onPress={() =>
+                navigation.navigate('mapHealPosition', {
+                  position: {
+                    latitude: appoint.latitude,
+                    longitude: appoint.longitude,
+                  },
+                })
+              }>
+              กดที่นี่ เพื่อดูแผนที่
+            </Text>
           </View>
           <View
             style={{

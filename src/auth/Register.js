@@ -53,7 +53,7 @@ const RegisterScreen = ({navigation}) => {
               cid: data.cid,
               birthday: date.toLocaleDateString(),
               phone: data.phone,
-              isAdmin: false
+              role:'user'
             });
           reset({
             f_name: '',

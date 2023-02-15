@@ -11,7 +11,7 @@ import HomeStaffScreen from './staff/HomeStaff';
 function Loading({navigation}) {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [role, setRole] = useState('');
   const [user, setUser] = useState();
   const dispatch = useDispatch();
   const authReducer = useSelector(state => state.user);
@@ -22,25 +22,24 @@ function Loading({navigation}) {
       const userDoc = await firestore().collection('users').doc(user.uid).get();
       if (userDoc.data()) {
         // console.log(user);
-        
-        console.log(userDoc.data().isAdmin);
-        setIsAdmin(userDoc.data().isAdmin)
+
+        setRole(userDoc.data().role);
         dispatch(
           setUserSlice({
             f_name: userDoc.data().f_name,
             l_name: userDoc.data().l_name,
             phone: userDoc.data().phone,
             cid: userDoc.data().cid,
+            role: userDoc.data().role,
             email: user.email,
             uid: user.uid,
             photoURL: user.photoURL,
-            isAdmin: user.isAdmin
           }),
         );
       } else {
         navigation.replace('registerGoogle');
       }
-      setUser(user);      
+      setUser(user);
     }
     if (initializing) setInitializing(false);
   }
@@ -54,12 +53,13 @@ function Loading({navigation}) {
 
   if (!user) {
     return <Login />;
-  } 
-  if(isAdmin){
-    return <HomeStaffScreen />
-  } else{
-    return <HomeScreen />;
   }
-
+  if (role == 'admin' || role == 'staff') {
+    return <HomeStaffScreen />;
+  } else if (role == 'user') {
+    return <HomeScreen />;
+  } else {
+    return <Login />;
+  }
 }
 export default Loading;

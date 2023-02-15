@@ -1,4 +1,3 @@
-
 import {
   Button,
   StyleSheet,
@@ -17,9 +16,12 @@ import Background from '../../../themes/BackGroundSession';
 import CardBorder from '../../../components/CardBorder';
 import Colors from '../../../themes/Colors';
 import BtGoBack from '../../../components/BtGoBack';
+import {useSelector, useDispatch} from 'react-redux';
 export default function DetailUserPage({route, navigation}) {
   const {userData} = route.params;
+  
   const [passwordChang, setPasswordChang] = React.useState('');
+  const user = useSelector(state => state.user);
   const [statusChangePassword, setStatusChangePassword] = React.useState(false);
   const onChangePassword = async () => {
     try {
@@ -39,7 +41,7 @@ export default function DetailUserPage({route, navigation}) {
       const res = await firestore()
         .collection(`users`)
         .doc(userData.key)
-        .update({isAdmin: true});
+        .update({role: 'staff'});
       Alert.alert('สำเร็จ', 'ให้สิทธิเป็นเจ้าหน้าที่สำเร็จ');
     } catch (error) {
       Alert.alert('ไม่สำเร็จ', 'กรุณาลองใหม่อีกครั้ง!');
@@ -63,7 +65,7 @@ export default function DetailUserPage({route, navigation}) {
             Alert.alert('สำเร็จ', 'ลบบัญชีสำเร็จ');
             navigation.navigate('users');
           } catch (error) {
-            console.log(error.message)
+            console.log(error.message);
             Alert.alert('ไม่สำเร็จ', 'ลบบัญชีไม่สำเร็จ!');
           }
         },
@@ -85,15 +87,22 @@ export default function DetailUserPage({route, navigation}) {
     <Background>
       <BtGoBack />
       <View style={styles.container}>
-        <Text style={{textAlign: 'center',fontWeight: 'bold',fontSize: 20,marginBottom: 10}}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          }}>
           ข้อมูลส่วนตัวผู้ใช้
         </Text>
         <CardBorder>
-        <View style={styles.image}>
-          <Image 
-            source={require('../../../../assets/person.png')}
-            style={{width: 80,height: 80}}
-          /></View>
+          <View style={styles.image}>
+            <Image
+              source={require('../../../../assets/person.png')}
+              style={{width: 80, height: 80}}
+            />
+          </View>
           <View style={styles.textInCard}>
             <Text style={styles.textSubtitle}>ชื่อ-นามสกุล</Text>
             <View style={styles.cardText}>
@@ -130,122 +139,122 @@ export default function DetailUserPage({route, navigation}) {
                 value={passwordChang}
                 placeholder="กรอกรหัสผ่านใหม่"
               />
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 5,
-                paddingHorizontal: 5,
-              }}>
-            <Button
-              style={{marginHorizontal: 10, backgroundColor: 'seagreen'}}
-              mode="contained"
-              title="บันทึก"
-              color={Colors.seagreen}
-              onPress={() => onChangePassword()}></Button>
-            <View style={{paddingVertical: 5}}></View>
-            <Text>|</Text>
-            <Button
-              style={{marginHorizontal: 10, backgroundColor: 'seagreen'}}
-              mode="contained"
-              title="ยกเลิก"
-              color={Colors.dimgray}
-              onPress={() => setStatusChangePassword(false)}></Button>
-            </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 5,
+                  paddingHorizontal: 5,
+                }}>
+                <Button
+                  style={{marginHorizontal: 10, backgroundColor: 'seagreen'}}
+                  mode="contained"
+                  title="บันทึก"
+                  color={Colors.seagreen}
+                  onPress={() => onChangePassword()}></Button>
+                <View style={{paddingVertical: 5}}></View>
+                <Text>|</Text>
+                <Button
+                  style={{marginHorizontal: 10, backgroundColor: 'seagreen'}}
+                  mode="contained"
+                  title="ยกเลิก"
+                  color={Colors.dimgray}
+                  onPress={() => setStatusChangePassword(false)}></Button>
+              </View>
             </CardBorder>
           </View>
         ) : (
           <View>
             <View style={styles.rowCard}>
-                <TouchableWithoutFeedback                 
-                  onPress={() => setStatusChangePassword(true)}>
-                  <View style={styles.box}>
-                    <Image
-                    source={require('../../../../assets/EditCard/resetpassword.png')}
-                    style={{width: 70, height: 70}}
-                    />
-                    <Text style={{marginTop: 5, textAlign: 'center'}}>
-                    เปลี่ยน {'\n'}รหัสผ่าน
-                    </Text>
-                  </View>
-                </TouchableWithoutFeedback>
-            <View style={{paddingVertical: 1}}></View>
-            {userData.isAdmin ? (
-                <TouchableWithoutFeedback                 
-                onPress={() => onSetToUser()}>
+              <TouchableWithoutFeedback
+                onPress={() => setStatusChangePassword(true)}>
                 <View style={styles.box}>
                   <Image
-                  source={require('../../../../assets/EditCard/switchuser.png')}
-                  style={{width: 70, height: 70}}
+                    source={require('../../../../assets/EditCard/resetpassword.png')}
+                    style={{width: 70, height: 70}}
                   />
                   <Text style={{marginTop: 5, textAlign: 'center'}}>
-                  กำหนดสิทธิ์เป็นผู้ใช้ทั่วไป
+                    เปลี่ยน {'\n'}รหัสผ่าน
                   </Text>
                 </View>
-                </TouchableWithoutFeedback>
-            ) : (
-                <TouchableWithoutFeedback                 
-                onPress={() => onSetToAdmin()}>
-                  <View style={styles.box}>
+              </TouchableWithoutFeedback>
+              <View style={{paddingVertical: 1}}></View>
+              {user.role == 'admin' ? (
+                user.role == 'staff' ? (
+                  <TouchableWithoutFeedback onPress={() => onSetToUser()}>
+                    <View style={styles.box}>
+                      <Image
+                        source={require('../../../../assets/EditCard/switchuser.png')}
+                        style={{width: 70, height: 70}}
+                      />
+                      <Text style={{marginTop: 5, textAlign: 'center'}}>
+                        กำหนดสิทธิ์เป็นผู้ใช้ทั่วไป
+                      </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                ) : (
+                  <TouchableWithoutFeedback onPress={() => onSetToAdmin()}>
+                    <View style={styles.box}>
+                      <Image
+                        source={require('../../../../assets/EditCard/key.png')}
+                        style={{width: 70, height: 70}}
+                      />
+                      <Text style={{marginTop: 5, textAlign: 'center'}}>
+                        กำหนดสิทธิ์เป็นเจ้าหน้าที่
+                      </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                )
+              ) : null}
+              <TouchableWithoutFeedback
+                onPress={() =>
+                  navigation.navigate('selectYear', {
+                    userData: userData,
+                  })
+                }>
+                <View style={styles.box}>
                   <Image
-                  source={require('../../../../assets/EditCard/key.png')}
-                  style={{width: 70, height: 70}}
-                />
+                    source={require('../../../../assets/EditCard/resultuser.png')}
+                    style={{width: 70, height: 70}}
+                  />
                   <Text style={{marginTop: 5, textAlign: 'center'}}>
-                  กำหนดสิทธิ์เป็นเจ้าหน้าที่
+                    ดูผลตรวจสุขภาพ
                   </Text>
-                  </View>
-                </TouchableWithoutFeedback>
-            )}
-            <TouchableWithoutFeedback
-              onPress={() =>
-                navigation.navigate('selectYear', {
-                  userData: userData,
-                })
-              }>
-              <View style={styles.box}>
-              <Image
-                  source={require('../../../../assets/EditCard/resultuser.png')}
-                  style={{width: 70, height: 70}}
-                />
-                <Text style={{marginTop: 5, textAlign: 'center'}}>
-                  ดูผลตรวจสุขภาพ
-                </Text>
-              </View>
-          </TouchableWithoutFeedback>
-          </View>  
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
           </View>
         )}
         <View style={styles.rowCard}>
           <TouchableWithoutFeedback
-              onPress={() =>
-                navigation.navigate('editUser', {
-                  userData: userData,
-                })
-              }>
-              <View style={styles.box}>
+            onPress={() =>
+              navigation.navigate('editUser', {
+                userData: userData,
+              })
+            }>
+            <View style={styles.box}>
               <Image
-                  source={require('../../../../assets/EditCard/editprofile.png')}
-                  style={{width: 70, height: 70}}/>
-                <Text style={{marginTop: 5, textAlign: 'center'}}>
-                  แก้ไขข้อมูลส่วนตัว
-                </Text>
-              </View>
+                source={require('../../../../assets/EditCard/editprofile.png')}
+                style={{width: 70, height: 70}}
+              />
+              <Text style={{marginTop: 5, textAlign: 'center'}}>
+                แก้ไขข้อมูลส่วนตัว
+              </Text>
+            </View>
           </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-              onPress={() => onDelete()}>
-              <View style={styles.box}>
-                <Image
-                  source={require('../../../../assets/EditCard/delete.png')}
-                  style={{width: 70, height: 70}}
-                />
-                <Text style={{marginTop: 5, textAlign: 'center'}}>
-                  ลบข้อมูล{'\n'}ผู้ใช้งาน
-                </Text>
-              </View>
+          <TouchableWithoutFeedback onPress={() => onDelete()}>
+            <View style={styles.box}>
+              <Image
+                source={require('../../../../assets/EditCard/delete.png')}
+                style={{width: 70, height: 70}}
+              />
+              <Text style={{marginTop: 5, textAlign: 'center'}}>
+                ลบข้อมูล{'\n'}ผู้ใช้งาน
+              </Text>
+            </View>
           </TouchableWithoutFeedback>
-          </View>
+        </View>
       </View>
     </Background>
   );
@@ -294,7 +303,7 @@ const styles = StyleSheet.create({
     width: 90,
     backgroundColor: 'transparent',
   },
-  image:{
+  image: {
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',

@@ -26,6 +26,7 @@ import DetailRegister from '../screens/staff/DetailRegister';
 import ResultHealtAfterCheck from '../screens/ResultHealtAfterCheck';
 import MakerMap from '../screens/staff/MakerMap';
 import MapHealPosition from '../screens/MapHealPosition';
+import AdviceVisit from '../screens/AdviceVisit';
 const InitNavigation = () => {
   return (
     <Stack.Navigator
@@ -57,6 +58,7 @@ const InitNavigation = () => {
       <Stack.Screen name="detailRegister" component={DetailRegister} />
       <Stack.Screen name="makerMap" component={MakerMap} />
       <Stack.Screen name="mapHealPosition" component={MapHealPosition} />
+      <Stack.Screen name="adviceVisit" component={AdviceVisit} />
     </Stack.Navigator>
   );
 };

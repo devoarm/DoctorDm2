@@ -87,9 +87,16 @@ const ResultHealtCheckScreen = () => {
                 style={{
                   backgroundColor: Colors.greenShade,
                   flexDirection: 'column',
-                  marginVertical: 20                  
+                  marginVertical: 20,
                 }}>
-                <Text style={{textAlign:'center',fontWeight:'bold',fontSize:20}}>ผลตรวจของ วันที่ : {item.date}</Text>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                    fontSize: 20,
+                  }}>
+                  ผลตรวจของ วันที่ : {item.date}
+                </Text>
                 <ChartResultHealt
                   bloodSugar={item.bloodSugar}
                   upperPressure={item.upperPressure}
@@ -172,6 +179,18 @@ const ResultHealtCheckScreen = () => {
                       : ''}
                   </Text>
                 </View>
+                <Button
+                  mode="contained"
+                  style={{
+                    backgroundColor: 'seagreen',
+                    marginVertical: 20,
+                    alignSelf: 'center',
+                  }}
+                  onPress={() => {
+                    navigation.navigate('adviceVisit');
+                  }}>
+                  คำแนะนำการดูแลสุขภาพ
+                </Button>
               </View>
             ))
           ) : (
@@ -187,14 +206,6 @@ const ResultHealtCheckScreen = () => {
               เพื่อการดูแลรักษาสุขภาพที่ถูกต้อง
             </Text>
           </View>
-          <Button
-            mode="contained"
-            style={{backgroundColor: 'seagreen', marginVertical: 20}}
-            onPress={() => {
-              navigation.navigate('doctorAdvice');
-            }}>
-            คำแนะนำการดูแลสุขภาพ
-          </Button>
         </View>
       </ScrollView>
     </ResultHealthCheckBg>
@@ -244,6 +255,6 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 15,
     marginVertical: 5,
-    alignSelf:'center'
+    alignSelf: 'center',
   },
 });
